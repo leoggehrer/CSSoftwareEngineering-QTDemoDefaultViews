@@ -12,7 +12,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="images\persons.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\QTDemoDefaultViews.Logic\QTDemoDefaultViews.Logic.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\persons.jpg" />
   </ItemGroup>
 
 </Project>

@@ -51,6 +51,10 @@ builder.Services.AddSwaggerGen(options =>
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
 
+// Add logic controller(s)
+
+builder.Services.AddTransient<QTDemoDefaultViews.Logic.IDataAccess<QTDemoDefaultViews.Logic.Entities.Person>, QTDemoDefaultViews.Logic.Controllers.PersonsController>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

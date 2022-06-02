@@ -3,10 +3,61 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:QTDemoDefaultViews.WpfApp"
+        xmlns:vm="clr-namespace:QTDemoDefaultViews.WpfApp.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Persons" Height="{Binding WindowHeight, Mode=TwoWay}" Width="{Binding WindowWidth, Mode=TwoWay}">
+    <Window.DataContext>
+        <vm:PersonsViewModel x:Name="DataSource"></vm:PersonsViewModel>
+    </Window.DataContext>
+    <Window.Resources>
+        <DataTemplate x:Key="listTemplate">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
 
+                <TextBlock Grid.Row="0" FontSize="22" Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.DataItemWidth}" Margin="5">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0} {1}">
+                            <Binding Path="FirstName"/>
+                            <Binding Path="LastName"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBlock Grid.Row="1" Text="{Binding Path=FirstName}" Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.DataItemWidth}" Margin="10 5 5 0"></TextBlock>
+                <TextBlock Grid.Row="2" Text="{Binding Path=LastName}" Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.DataItemWidth}" Margin="10 5 5 0"></TextBlock>
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40*"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="60*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Image Grid.Row="0" Stretch="UniformToFill" Source="Images/persons.jpg"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10 0 0 0">
+            <Label Content="FirstName:" Width="130"></Label>
+            <TextBox Text="{Binding Path=FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100" Height="22"></TextBox>
+            <Label Content="LastName:" Width="85"></Label>
+            <TextBox Text="{Binding Path=LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100" Height="22"></TextBox>
+        </StackPanel>
+
+        <ListView Grid.Row="2" 
+                  Background="WhiteSmoke"
+                  Margin="10" 
+                  ItemsSource="{Binding Persons}" 
+                  ItemTemplate="{StaticResource ResourceKey=listTemplate}" >
+        </ListView>
     </Grid>
 </Window>
